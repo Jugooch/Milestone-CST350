@@ -8,5 +8,10 @@ namespace Milestone_CST350.Controllers
 		{
 			return View();
 		}
+
+		public IActionResult SignUp()
+		{
+			return View();
+		}
 	}
 }
