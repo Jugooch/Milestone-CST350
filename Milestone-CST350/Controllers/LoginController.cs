@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Milestone_CST350.Models;
+using Milestone_CST350.Services;
 
 namespace Milestone_CST350.Controllers
 {
@@ -13,5 +15,22 @@ namespace Milestone_CST350.Controllers
 		{
 			return View();
 		}
-	}
+
+		public IActionResult CreateAccount()
+		{
+			return View();
+		}
+
+        public IActionResult LoginAuthenticate(UserModel user)
+        {
+			SecurityService service = new SecurityService();
+			if (service.IsValid(user)){
+				return RedirectToAction("Index", "Home");
+			}
+			else
+			{
+				return RedirectToAction("Index", "Login");
+			}
+        }
+    }
 }
