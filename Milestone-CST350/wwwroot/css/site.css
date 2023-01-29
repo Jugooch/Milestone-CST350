@@ -16,3 +16,68 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.loginContent {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction:column;
+    text-align:center;
+}
+
+.loginContent h5{
+    font-style: italic;
+    font-size:medium;
+}
+
+.loginHeader{
+    background-color:white;
+    border: 4px solid black;
+    border-radius: 25px;
+    height: 200px;
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+.loginHeader h1{
+    font-weight: bold;
+    text-decoration:underline;
+}
+
+.loginHeader h2{
+    margin-top: 45px;
+}
+
+.loginBody{
+    background-color:darkgrey;
+}
+
+.loginForm{
+    width: 60%;
+}
+
+/* Medium screen devices (768px and above) */
+@media only screen and (min-width: 900px) {
+    .loginForm {
+        width: 20%;
+    }
+}
+
+.signupHeader{
+    width: 100%;
+    height: 75px;
+    border-bottom: 4px solid black;
+    background-color: white;
+    text-align: center;
+}
+.signupHeader h4{
+    padding-top: 20px;
+    font-weight: bold;
+}
+
+.form-group label{
+    width: 100%;
+    font-size: 20px;
+    margin-bottom: 3px;
+    border-bottom: 2px solid black;
+}

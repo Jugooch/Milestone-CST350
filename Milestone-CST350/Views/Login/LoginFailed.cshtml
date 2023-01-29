@@ -27,6 +27,11 @@
             </div>
         </div>
         <div class="row">
+            <div class="col-md-12" style="background-color: white; border-radius: 25px; border: 4px solid black">
+                <h5 style="color: red;">Invalid Login Attempt... Please try again</h5>
+            </div>
+        </div>
+        <div class="row">
             <div class="col-md-12">
                 <form asp-action="LoginAuthenticate">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -59,4 +64,3 @@
         }
     }
 </body>
-

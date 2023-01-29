@@ -21,6 +21,11 @@ namespace Milestone_CST350.Controllers
 			return View();
 		}
 
+		public IActionResult LoginFailed()
+		{
+			return View();
+		}
+
         public IActionResult LoginAuthenticate(UserModel user)
         {
 			SecurityService service = new SecurityService();
@@ -29,7 +34,7 @@ namespace Milestone_CST350.Controllers
 			}
 			else
 			{
-				return RedirectToAction("Index", "Login");
+				return RedirectToAction("LoginFailed", "Login");
 			}
         }
     }
