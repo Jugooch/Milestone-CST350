@@ -1,64 +1,87 @@
 ﻿@model Milestone_CST350.Models.UserModel
 @{
+    Layout = null;
 }
-<h4>Sign Up</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="CreateAccount">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="FirstName" class="control-label"></label>
-                <input asp-for="FirstName" class="form-control" />
-                <span asp-validation-for="FirstName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="LastName" class="control-label"></label>
-                <input asp-for="LastName" class="form-control" />
-                <span asp-validation-for="LastName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Sex" class="control-label"></label>
-                <input asp-for="Sex" class="form-control" />
-                <span asp-validation-for="Sex" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Age" class="control-label"></label>
-                <input asp-for="Age" class="form-control" />
-                <span asp-validation-for="Age" class="text-danger"></span>
-            </div>            <div class="form-group">
-                <label asp-for="State" class="control-label"></label>
-                <input asp-for="State" class="form-control" />
-                <span asp-validation-for="State" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Email" class="control-label"></label>
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Username" class="control-label"></label>
-                <input asp-for="Username" class="form-control" />
-                <span asp-validation-for="Username" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Password" class="control-label"></label>
-                <input asp-for="Password" class="form-control" />
-                <span asp-validation-for="Password" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create Account" class="btn btn-primary" />
-            </div>
-        </form>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Milestone_CST350</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/Milestone_CST350.styles.css" asp-append-version="true" />
+</head>
+<body class="loginBody">
+    <div class="signupHeader">
+        <h4>Sign Up</h4>
     </div>
-</div>
+    <div style="margin-top: 20px; margin-left: 20px;">
+        <a class="btn btn-light" asp-action="Index">Back to Login</a>
+    </div>
+    <div class="loginContent">
+        <div class="loginForm">
+            <div class="row">
+                <div class="col-md-12">
+                    <form asp-action="CreateAccount">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="form-group" style="text-align: left; margin-top: 5px;">
+                            <label asp-for="FirstName" class="control-label">First Name:</label>
+                            <input asp-for="FirstName" class="form-control" />
+                            <span asp-validation-for="FirstName" class="text-danger"></span>
+                        </div>
+                        <div class="form-group" style="text-align: left; margin-top: 5px;">
+                            <label asp-for="LastName" class="control-label">Last Name:</label>
+                            <input asp-for="LastName" class="form-control" />
+                            <span asp-validation-for="LastName" class="text-danger"></span>
+                        </div>
+                        <div class="form-group" style="text-align: left; margin-top: 5px;">
+                            <label asp-for="Sex" class="control-label">Sex:</label>
+                            <input asp-for="Sex" class="form-control" />
+                            <span asp-validation-for="Sex" class="text-danger"></span>
+                        </div>
+                        <div class="form-group" style="text-align: left; margin-top: 5px;">
+                            <label asp-for="Age" class="control-label">Age:</label>
+                            <input asp-for="Age" class="form-control" />
+                            <span asp-validation-for="Age" class="text-danger"></span>
+                        </div>            
+                        <div class="form-group" style="text-align: left; margin-top: 5px;">
+                            <label asp-for="State" class="control-label">State:</label>
+                            <input asp-for="State" class="form-control" />
+                            <span asp-validation-for="State" class="text-danger"></span>
+                        </div>
+                        <div class="form-group" style="text-align: left; margin-top: 5px;">
+                            <label asp-for="Email" class="control-label">Email:</label>
+                            <input asp-for="Email" class="form-control" />
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+                        <div class="form-group" style="text-align: left; margin-top: 5px;">
+                            <label asp-for="Username" class="control-label">Username:</label>
+                            <input asp-for="Username" class="form-control" />
+                            <span asp-validation-for="Username" class="text-danger"></span>
+                        </div>
+                        <div class="form-group" style="text-align: left; margin-top: 5px;">
+                            <label asp-for="Password" class="control-label">Password:</label>
+                            <input asp-for="Password" data-bs-toggle="tooltip" title="Please enter a password that is at least 6 characters..." class="form-control" />
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>                        
+                        <div class="form-group" style="text-align: left; margin-top: 5px;">
+                            <label asp-for="Password" class="control-label">Confirm Password:</label>
+                            <input asp-for="Password" data-bs-toggle="tooltip" title="Please enter the same password as above..." class="form-control" />
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
+                        <div class="form-group" style="margin-top: 5px;">
+                            <input type="submit" value="Create Account" class="btn btn-primary" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
-<div>
-    <a asp-action="Index">Back to Login Page</a>
-</div>
 
-@section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    @section Scripts {
+        @{
+            await Html.RenderPartialAsync("_ValidationScriptsPartial");
+        }
     }
-}
+</body>
