@@ -16,10 +16,18 @@ namespace Milestone_CST350.Controllers
 			return View();
 		}
 
-		public IActionResult CreateAccount()
-		{
-			return View();
-		}
+        public IActionResult CreateAccount(UserModel user)
+        {
+            UserService service = new UserService();
+            if (service.IsValid(user))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                return RedirectToAction("Index", "Login");
+            }
+        }
 
         public IActionResult LoginAuthenticate(UserModel user)
         {
