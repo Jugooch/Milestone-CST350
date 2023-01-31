@@ -81,3 +81,17 @@ body {
     margin-bottom: 3px;
     border-bottom: 2px solid black;
 }
+
+.selectDifficulty {
+    background-color: white;
+    border: 4px solid black;
+    border-radius: 25px;
+    width: 40%;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.selectDifficulty button{
+    margin-top: 5px;
+    margin-bottom: 5px;
+}

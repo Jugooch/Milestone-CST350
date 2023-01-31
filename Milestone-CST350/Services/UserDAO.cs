@@ -13,7 +13,7 @@ namespace Milestone_CST350.Models
         public bool addUser(UserModel user)
         {
             bool success = false;
-            string sql = "INSERT INTO dbo.Users(FirstName, LastName, Sex, Age, State, Email, Username, Password) VALUES(@firstname, @lastname, @sex, @age, @state, @email, @username, @password) COMMIT;";
+            string sql = "INSERT INTO dbo.Users(FirstName, LastName, Sex, Age, State, Email, Username, Password) VALUES (@firstname, @lastname, @sex, @age, @state, @email, @username, @password);";
 
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
@@ -32,9 +32,9 @@ namespace Milestone_CST350.Models
                 try
                 {
                     conn.Open();
-                    SqlDataReader reader = command.ExecuteReader();
-
-                    if (reader.HasRows) { success = true; }
+                    int reader = command.ExecuteNonQuery();
+                    if (reader != 0) { success = true; }
+                    conn.Close();
                 }
                 catch (Exception e)
                 {
