@@ -16,6 +16,11 @@ namespace Milestone_CST350.Controllers
 			return View();
 		}
 
+		public IActionResult SignupFailed()
+		{
+			return View();
+		}
+
         public IActionResult CreateAccount(UserModel user)
         {
             UserService service = new UserService();
@@ -25,7 +30,7 @@ namespace Milestone_CST350.Controllers
             }
             else
             {
-                return RedirectToAction("Index", "Login");
+                return RedirectToAction("SignupFailed", "Login");
             }
         }
 
