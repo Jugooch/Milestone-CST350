@@ -1,26 +1,44 @@
 ﻿using ButtonGrid.Models;
+using Minesweeper_GUI;
 
 namespace Milestone_CST350.Models
 {
     public class GridModel
     {
-        public int Difficulty { get; set; }
-        public List<ButtonModel> Buttons { get; set; }
+        // The cell class represents one square onthe board. Grid is a 2d array of cells
+        public Cell[,] Grid { get; set; }
 
-        public GridModel() { }
+        // the board is square. Size is the both the length and width of the board
+        public int Size { get; set; }
 
-        public GridModel(int difficulty) 
+        // difficulty is a percent value.  0.05 difficulty means that 5% of the squares will contain a bomb.
+        public float Difficulty { get; set; }
+
+        // total clicks in the game
+        public int clicks;
+
+        // starting time for the game. Used to determine score
+        public DateTime startTime;
+
+        public DateTime endTime;
+
+        // score - calcualted at the end of the game
+        public int score;
+
+        // Create a board game with size and difficulty
+        public GridModel()
         {
-            int gridSize = 0;
-            this.Difficulty = difficulty;
-            this.Buttons = new List<ButtonModel>();
-            if(Difficulty == 1) { gridSize = 25; }
-            else if (Difficulty == 2) { gridSize = 64; }
-            else { gridSize = 100; }
-            for (int i = 0; i < gridSize; i++) 
-            {
-                Buttons.Add(new ButtonModel(i, false, false));
-            }
+
+        }
+        public GridModel(Board board)
+        {
+            Grid = board.Grid;
+            Size = board.Size;
+            Difficulty = board.Difficulty;
+            clicks = board.clicks;
+            startTime = board.startTime;
+            endTime = board.endTime;
+            score = board.score;
         }
     }
 }

@@ -4,10 +4,14 @@
 }
 
 <div style="width:100%;" align="center">
+    <div>
+        <h1>You have Won</h1>
+    </div>
     <div class="gameBoard" style="width: 400px;">
         <div style="display:flex; flex-wrap: wrap;">
 
-            @for (int i = 0; i < Model.Size; i++) {
+            @for (int i = 0; i < Model.Size; i++)
+            {
                 <div style="flex-basis:100%; height:auto; margin-top: auto;"></div>
                 @for (int x = 0; x < Model.Size; x++)
                 {
@@ -31,12 +35,13 @@
                         {
                             @if (Model.Grid[i, x].IsFlagged)
                             {
-                                <button class="gridButton" style="width:40px; height: 40px; border: 2px solid red;" type="submit" value="@buttonNum" name="buttonNumber" asp-controller="Home" asp-action="HandleButtonClick">
+                                <button class="gridButton" style="width:40px; height: 40px; border: 2px solid red;" type="submit" value="@buttonNum" name="buttonNumber" asp-controller="Home" asp-action="HandleButtonClick" disabled="true">
+                                    flagged
                                 </button>
                             }
                             else
                             {
-                                <button style="width: 40px; height: 40px; border: 2px solid black;" type="submit" value="@buttonNum" name="buttonNumber" asp-controller="Home" asp-action="HandleButtonClick">
+                                <button style="width: 40px; height: 40px; border: 2px solid black;" type="submit" value="@buttonNum" name="buttonNumber" asp-controller="Home" asp-action="HandleButtonClick" disabled="true">
                                 </button>
                             }
                         }

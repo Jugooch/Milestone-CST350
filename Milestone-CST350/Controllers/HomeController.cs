@@ -1,6 +1,7 @@
 ﻿using ButtonGrid.Models;
 using Microsoft.AspNetCore.Mvc;
 using Milestone_CST350.Models;
+using Minesweeper_GUI;
 using System.Diagnostics;
 
 namespace Milestone_CST350.Controllers
@@ -8,9 +9,9 @@ namespace Milestone_CST350.Controllers
 	public class HomeController : Controller
 	{
 		private readonly ILogger<HomeController> _logger;
-        static List<ButtonModel> buttons = new List<ButtonModel>();
-		int difficulty;
-		static GridModel gridModel = new GridModel(0);
+        static Cell[,] buttons;
+		static Board board = new Board();
+		static GridModel gridModel = new GridModel();
 
         public HomeController(ILogger<HomeController> logger)
 		{
@@ -28,8 +29,11 @@ namespace Milestone_CST350.Controllers
 		}
 		public IActionResult DifficultySelected(GridModel grid) 
 		{ 
-			gridModel = new GridModel(grid.Difficulty);
-			buttons = gridModel.Buttons;
+			board = new Board(10, (float)grid.Difficulty);
+			buttons = board.Grid;
+			board.setupBombs();
+			board.CalcLiveNeighbors();
+			gridModel = new GridModel(board);
 			return View("Minesweeper", gridModel);
 		}
 
@@ -41,10 +45,31 @@ namespace Milestone_CST350.Controllers
         {
             int bN = int.Parse(buttonNumber);
 
-            buttons.ElementAt(bN).Clicked = true;
-			gridModel.Buttons = buttons;
+			for(int i = 0; i < 10; i++)
+			{
+				for(int x = 0; x< 10; x++)
+				{
+					if (buttons[i, x].ID == bN)
+					{
+						board.leftClick(i, x);
+                    }
+				}
+			}
 
-            return View("Minesweeper", gridModel);
+			board.Grid = buttons;
+			gridModel = new GridModel(board);
+
+			if (board.checkForWin())
+			{
+				return View("MinesweeperWin", gridModel);
+			}
+			else if (board.checkForLose())
+			{
+				return View("MinesweeperLose", gridModel);
+			}
+			else {
+				return View("Minesweeper", gridModel);
+			}
         }
 
         public IActionResult Privacy()
