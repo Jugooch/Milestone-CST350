@@ -1,50 +1,9 @@
 ﻿@model Milestone_CST350.Models.GridModel;
-@{
-    int buttonNum = 0;
-}
 
 <div style="width:100%;" align="center">
     <div class="gameBoard" style="width: 400px;">
-        <div style="display:flex; flex-wrap: wrap;">
-
-            @for (int i = 0; i < Model.Size; i++) {
-                <div style="flex-basis:100%; height:auto; margin-top: auto;"></div>
-                @for (int x = 0; x < Model.Size; x++)
-                {
-                    <form>
-                        @if (Model.Grid[i, x].IsVisited)
-                        {
-                            if (!Model.Grid[i, x].IsLive)
-                            {
-                                <button style="width: 40px; height: 40px; border: 2px solid black; background-color: darkgray;" type="submit" value="@buttonNum" name="buttonNumber" asp-controller="Home" asp-action="HandleButtonClick" disabled="true">
-                                    @Model.Grid[i, x].LiveNeighbors
-                                </button>
-                            }
-                            else
-                            {
-                                <button style="width: 40px; height: 40px; border: 2px solid black; background-color: darkgray;" type="submit" value="@buttonNum" name="buttonNumber" asp-controller="Home" asp-action="HandleButtonClick" disabled="true">
-                                    bomb
-                                </button>
-                            }
-                        }
-                        else
-                        {
-                            @if (Model.Grid[i, x].IsFlagged)
-                            {
-                                <button class="gridButton" style="width:40px; height: 40px; border: 2px solid red;" type="submit" value="@buttonNum" name="buttonNumber" asp-controller="Home" asp-action="HandleButtonClick">
-                                </button>
-                            }
-                            else
-                            {
-                                <button style="width: 40px; height: 40px; border: 2px solid black;" type="submit" value="@buttonNum" name="buttonNumber" asp-controller="Home" asp-action="HandleButtonClick">
-                                </button>
-                            }
-                        }
-                    </form>
-                    buttonNum++;
-                }
-            }
-
+        <div id="grid" style="display:flex; flex-wrap: wrap;">
+            <partial name="_Grid" model="Model" />
         </div>
     </div>
 </div>

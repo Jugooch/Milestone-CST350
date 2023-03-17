@@ -145,12 +145,6 @@ namespace Minesweeper_GUI
                         // break because there is no need to continue checking other cells on the board.
                         break;
                     }
-                    if (Grid[r,c].IsLive == true && Grid[r,c].IsFlagged == false)
-                    {
-                        // if a cell has a bomb and does not have a flag, then the game is not over. must continue.
-                        won = false;
-                        break;
-                    }
                 }
                 // break because there is no need to continue checking other cells on the board.
                 if (!won) break;

@@ -27,23 +27,19 @@ namespace Milestone_CST350.Controllers
 		{
 			return View();
 		}
-		public IActionResult DifficultySelected(GridModel grid) 
-		{ 
-			board = new Board(10, (float)grid.Difficulty);
-			buttons = board.Grid;
-			board.setupBombs();
-			board.CalcLiveNeighbors();
-			gridModel = new GridModel(board);
-			return View("Minesweeper", gridModel);
-		}
 
-		public IActionResult Minesweeper()
-		{
-			return View(gridModel);
-        }
-        public IActionResult HandleButtonClick(string buttonNumber)
+		public IActionResult Minesweeper(GridModel grid)
         {
-            int bN = int.Parse(buttonNumber);
+            board = new Board(10, (float)grid.Difficulty);
+            buttons = board.Grid;
+            board.setupBombs();
+            board.CalcLiveNeighbors();
+            gridModel = new GridModel(board);
+            return View("Minesweeper", gridModel);
+        }
+
+        public IActionResult HandleButtonClick(int bN)
+		{ 
 
 			for(int i = 0; i < 10; i++)
 			{
@@ -61,6 +57,7 @@ namespace Milestone_CST350.Controllers
 
 			if (board.checkForWin())
 			{
+				Console.WriteLine("You have won...");
 				return View("MinesweeperWin", gridModel);
 			}
 			else if (board.checkForLose())
@@ -68,7 +65,7 @@ namespace Milestone_CST350.Controllers
 				return View("MinesweeperLose", gridModel);
 			}
 			else {
-				return View("Minesweeper", gridModel);
+				return PartialView("_Grid", gridModel);
 			}
         }
 

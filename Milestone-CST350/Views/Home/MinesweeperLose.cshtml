@@ -1,6 +1,7 @@
 ﻿@model Milestone_CST350.Models.GridModel;
 @{
     int buttonNum = 0;
+    Layout = null;
 }
 
 <div style="width:100%;" align="center">
@@ -16,33 +17,17 @@
                 @for (int x = 0; x < Model.Size; x++)
                 {
                     <form>
-                        @if (Model.Grid[i, x].IsVisited)
+                        @if (!Model.Grid[i, x].IsLive)
                         {
-                            if (!Model.Grid[i, x].IsLive)
-                            {
-                                <button style="width: 40px; height: 40px; border: 2px solid black; background-color: darkgray;" type="submit" value="@buttonNum" name="buttonNumber" asp-controller="Home" asp-action="HandleButtonClick" disabled="true">
-                                    @Model.Grid[i, x].LiveNeighbors
-                                </button>
-                            }
-                            else
-                            {
-                                <button style="width: 40px; height: 40px; border: 2px solid black; background-color: darkgray;" type="submit" value="@buttonNum" name="buttonNumber" asp-controller="Home" asp-action="HandleButtonClick" disabled="true">
-                                    bomb
-                                </button>
-                            }
+                            <button style="width: 40px; height: 40px; border: 2px solid black; background-color: darkgray;" type="submit" value="@buttonNum" name="buttonNumber" asp-controller="Home" asp-action="HandleButtonClick" disabled="true">
+                                @Model.Grid[i, x].LiveNeighbors
+                            </button>
                         }
                         else
                         {
-                            @if (Model.Grid[i, x].IsFlagged)
-                            {
-                                <button class="gridButton" style="width:40px; height: 40px; border: 2px solid red;" type="submit" value="@buttonNum" name="buttonNumber" asp-controller="Home" asp-action="HandleButtonClick" disabled="true">
-                                </button>
-                            }
-                            else
-                            {
-                                <button style="width: 40px; height: 40px; border: 2px solid black;" type="submit" value="@buttonNum" name="buttonNumber" asp-controller="Home" asp-action="HandleButtonClick" disabled="true">
-                                </button>
-                            }
+                           <button style="width: 40px; height: 40px; border: 2px solid black; background-color: darkgray;" type="submit" value="@buttonNum" name="buttonNumber" asp-controller="Home" asp-action="HandleButtonClick" disabled="true">
+                              <img style="width:35px; height: 35px"src="/images/minesweeperbomb.png" alt="bomb" />
+                           </button>
                         }
                     </form>
                     buttonNum++;
