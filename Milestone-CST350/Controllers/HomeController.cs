@@ -79,5 +79,5 @@ namespace Milestone_CST350.Controllers
 		{
 			return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
 		}
-	}
+    }
 }
