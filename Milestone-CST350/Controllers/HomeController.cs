@@ -1,8 +1,7 @@
-﻿using ButtonGrid.Models;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Milestone_CST350.Models;
-using Minesweeper_GUI;
 using System.Diagnostics;
+using Minesweeper_GUI;
 
 namespace Milestone_CST350.Controllers
 {
@@ -83,7 +82,9 @@ namespace Milestone_CST350.Controllers
                     }
                 }
             }
-			gridModel = new GridModel(board);
+
+            board.Grid = buttons;
+            gridModel = new GridModel(board);
 
             return PartialView("_Grid", gridModel);
         }

@@ -6,7 +6,7 @@ namespace Milestone_CST350.Services
     public class SecurityDAO
     {
         //Connection String for the local DB
-        String connectionString = "Data Source=(localdb)\\ProjectModels;Initial Catalog=Milestone-350;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+        String connectionString = "Data Source=(localdb)\\ProjectModels;Initial Catalog=CST-350 Milestone;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
         public bool findUser(UserModel user) 
         {
             bool success = false;
