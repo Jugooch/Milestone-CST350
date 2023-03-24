@@ -47,7 +47,8 @@ namespace Milestone_CST350.Controllers
 				{
 					if (buttons[i, x].ID == bN)
 					{
-						board.leftClick(i, x);
+                        //leftClick
+                        board.leftClick(i, x);
                     }
 				}
 			}
@@ -67,6 +68,24 @@ namespace Milestone_CST350.Controllers
 			else {
 				return PartialView("_Grid", gridModel);
 			}
+        }
+
+        public IActionResult HandleButtonFlag(int bN)
+        {
+
+            for (int i = 0; i < 10; i++)
+            {
+                for (int x = 0; x < 10; x++)
+                {
+                    if (buttons[i, x].ID == bN)
+                    {
+                        board.rightClick(i, x);
+                    }
+                }
+            }
+			gridModel = new GridModel(board);
+
+            return PartialView("_Grid", gridModel);
         }
 
         public IActionResult Privacy()
