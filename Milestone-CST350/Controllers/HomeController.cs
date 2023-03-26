@@ -1,8 +1,7 @@
-﻿using ButtonGrid.Models;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Milestone_CST350.Models;
-using Minesweeper_GUI;
 using System.Diagnostics;
+using Minesweeper_GUI;
 
 namespace Milestone_CST350.Controllers
 {
@@ -47,7 +46,8 @@ namespace Milestone_CST350.Controllers
 				{
 					if (buttons[i, x].ID == bN)
 					{
-						board.leftClick(i, x);
+                        //leftClick
+                        board.leftClick(i, x);
                     }
 				}
 			}
@@ -67,6 +67,26 @@ namespace Milestone_CST350.Controllers
 			else {
 				return PartialView("_Grid", gridModel);
 			}
+        }
+
+        public IActionResult HandleButtonFlag(int bN)
+        {
+
+            for (int i = 0; i < 10; i++)
+            {
+                for (int x = 0; x < 10; x++)
+                {
+                    if (buttons[i, x].ID == bN)
+                    {
+                        board.rightClick(i, x);
+                    }
+                }
+            }
+
+            board.Grid = buttons;
+            gridModel = new GridModel(board);
+
+            return PartialView("_Grid", gridModel);
         }
 
         public IActionResult Privacy()

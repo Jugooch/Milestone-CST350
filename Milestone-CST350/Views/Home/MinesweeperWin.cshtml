@@ -54,3 +54,12 @@
         </div>
     </div>
 </div>
+<script>
+    function handleButtonContextMenu(event, button) {
+        // Get the text of the clicked button
+        var buttonText = button.textContent.trim();
+        console.log('Button right-click detected: ' + buttonText);
+        // Prevent the default context menu from appearing
+        event.preventDefault();
+    }
+</script>

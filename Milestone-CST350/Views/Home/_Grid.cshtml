@@ -15,13 +15,13 @@
             {
                 if (!Model.Grid[i, x].IsLive)
                 {
-                    <button style="width: 40px; height: 40px; border: 2px solid black; background-color: darkgray;" type="submit" value="@buttonNum" name="buttonNumber" asp-controller="Home" asp-action="HandleButtonClick" disabled="true">
+                    <button style="width: 40px; height: 40px; border: 2px solid black; background-color: darkgray;" type="submit" value="@buttonNum" name="buttonNumber" oncontextmenu="handleButtonContextMenu(event, this)" asp-controller="Home" asp-action="HandleButtonClick" disabled="true">
                         @Model.Grid[i, x].LiveNeighbors
                     </button>
                 }
                 else
                 {
-                    <button style="width: 40px; height: 40px; border: 2px solid black; background-color: darkgray;" type="submit" value="@buttonNum" name="buttonNumber" asp-controller="Home" asp-action="HandleButtonClick" disabled="true">
+                    <button style="width: 40px; height: 40px; border: 2px solid black; background-color: darkgray;" type="submit" value="@buttonNum" name="buttonNumber" oncontextmenu="handleButtonContextMenu(event, this)" asp-controller="Home" asp-action="HandleButtonClick" disabled="true">
                         <img src="/images/Bomb.jpg" alt="bomb" />
                     </button>
                 }
@@ -30,12 +30,12 @@
             {
                 @if (Model.Grid[i, x].IsFlagged)
                 {
-                    <button class="grid-button" style="width:40px; height: 40px; border: 2px solid red;" type="submit" value="@buttonNum" name="buttonNumber" asp-controller="Home" asp-action="HandleButtonClick">
+                    <button class="grid-button" style="width:40px; height: 40px; border: 2px solid red;" type="submit" value="@buttonNum" name="buttonNumber" oncontextmenu="handleButtonContextMenu(event, this)" asp-controller="Home" asp-action="HandleButtonClick">
                     </button>
                 }
                 else
                 {
-                    <button style="width: 40px; height: 40px; border: 2px solid black;" class="grid-button" id="grid-button"  type="button" value="@buttonNum" name="buttonNumber" asp-controller="Home" asp-action="HandleButtonClick">
+                    <button style="width: 40px; height: 40px; border: 2px solid black;" class="grid-button" id="grid-button" type="button" value="@buttonNum" name="buttonNumber" oncontextmenu="handleButtonContextMenu(event, this)" asp-controller="Home" asp-action="HandleButtonClick">
                     </button>
                 }
             }

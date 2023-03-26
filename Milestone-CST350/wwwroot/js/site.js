@@ -15,3 +15,18 @@
         }
     })
 })
+
+function handleButtonContextMenu(event, button) {
+
+    // oncontextmenu is when this method is called
+    $.ajax({
+        url: '/Home/HandleButtonFlag',
+        type: 'POST',
+        data: { bN: button.value },
+        success: function (result) {
+            console.log('Button right-click detected: ' + button.value);
+            $("#grid").html(result);
+        }
+    });
+    event.preventDefault();
+}
