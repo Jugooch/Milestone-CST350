@@ -2,6 +2,7 @@
 using Milestone_CST350.Models;
 using System.Diagnostics;
 using Minesweeper_GUI;
+using Milestone_CST350.Services;
 
 namespace Milestone_CST350.Controllers
 {
@@ -11,20 +12,41 @@ namespace Milestone_CST350.Controllers
         static Cell[,] buttons;
 		static Board board = new Board();
 		static GridModel gridModel = new GridModel();
+		MinesweeperService minesweeperService = new MinesweeperService();
+
+        /*
+         * 
+         * THIS SHOULD UPDATE WHEN A USER IS LOGGED IN AND STAY UNTIL LOGGED OUT/APP QUIT
+         * 
+         */
+        UserModel LoggedInUser = new UserModel();
+        List<int> savedGames = new List<int>();
 
         public HomeController(ILogger<HomeController> logger)
 		{
 			_logger = logger;
 		}
 
-		public IActionResult Index()
+		public IActionResult Index(int userID)
 		{
-			return View();
+			savedGames = minesweeperService.GetAllBoards(userID);
+			List<string> stringList = new List<string>();
+			stringList.Add("hello");
+			stringList.Add("world");
+			return View(stringList);
 		}
 
 		public IActionResult SelectDifficulty()
 		{
 			return View();
+		}
+
+		public IActionResult ContinueGame(int gameId) 
+		{ 
+			board = minesweeperService.GetBoard(gameId);
+			buttons = board.Grid;
+			gridModel = new GridModel(board);
+			return View("Minesweeper", gridModel);
 		}
 
 		public IActionResult Minesweeper(GridModel grid)

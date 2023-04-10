@@ -6,6 +6,7 @@ namespace Milestone_CST350.Controllers
 {
 	public class LoginController : Controller
 	{
+		MinesweeperService minesweeperService = new MinesweeperService();
 		public IActionResult Index()
 		{
 			return View();
@@ -26,7 +27,7 @@ namespace Milestone_CST350.Controllers
             UserService service = new UserService();
             if (service.IsValid(user))
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", new RouteValueDictionary(new { controller = "Home", action = "Index", userId = user.ID }));
             }
             else
             {
@@ -43,7 +44,7 @@ namespace Milestone_CST350.Controllers
         {
 			SecurityService service = new SecurityService();
 			if (service.IsValid(user)){
-				return RedirectToAction("Index", "Home");
+				return RedirectToAction("Index", new RouteValueDictionary( new { controller = "Home", action = "Index", userId = user.ID }));
 			}
 			else
 			{
