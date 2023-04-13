@@ -25,18 +25,61 @@ namespace Milestone_CST350.Controllers
 			return View();
 		}
 
+		public IActionResult PlayGame()
+		{
+			return View();
+		}
+
 		public IActionResult SelectDifficulty()
 		{
 			return View();
 		}
 
-		public IActionResult Minesweeper(GridModel grid)
+        public IActionResult LoadGame()
         {
+            string userIdCookie = HttpContext.Request.Cookies["UserId"];
+
+            if (!string.IsNullOrEmpty(userIdCookie) && int.TryParse(userIdCookie, out int userId))
+            {
+                // 'userId' variable now contains the user's ID from the cookie
+            }
+
+            MongoUser user = MongoUsrersDAO.GetUserByIdAsync(userIdCookie);
+            return View(user);
+        }
+
+        public IActionResult PlayLoadedGame(int id)
+        {
+            string userIdCookie = HttpContext.Request.Cookies["UserId"];
+
+            if (!string.IsNullOrEmpty(userIdCookie) && int.TryParse(userIdCookie, out int userId))
+            {
+                // 'userId' variable now contains the user's ID from the cookie
+            }
+
+            MongoUser user = MongoUsrersDAO.GetUserByIdAsync(userIdCookie);
+
+            return View("Minesweeper", user.Boards[id]);
+        }
+
+        public IActionResult Minesweeper(GridModel grid)
+        {
+            string userIdCookie = HttpContext.Request.Cookies["UserId"];
+
+            if (!string.IsNullOrEmpty(userIdCookie) && int.TryParse(userIdCookie, out int userId))
+            {
+                // 'userId' variable now contains the user's ID from the cookie
+            }
+
+            MongoUser user = MongoUsrersDAO.GetUserByIdAsync(userIdCookie);
+
             board = new Board(10, (float)grid.Difficulty);
             buttons = board.Grid;
             board.setupBombs();
             board.CalcLiveNeighbors();
             gridModel = new GridModel(board);
+            gridModel.Id = user.Boards.Count;
+            gridModel.Name = "Board " + user.Boards.Count;
             return View("Minesweeper", gridModel);
         }
 
@@ -102,8 +145,13 @@ namespace Milestone_CST350.Controllers
             }
 
             MongoUser user = MongoUsrersDAO.GetUserByIdAsync(userIdCookie);
-			// if there is a grid Id then replace at that index
-			user.Boards.Add(gridModel);
+            // if there is a grid Id then replace at that index
+
+            gridModel.Id = user.Boards.Count;
+            gridModel.Name = "Board " + user.Boards.Count;
+
+
+            user.Boards.Add(gridModel);
 			MongoUsrersDAO.UpdateUserAsync(userIdCookie, user);
 			return View();
 		}
