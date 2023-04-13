@@ -2,6 +2,7 @@
 using Milestone_CST350.Models;
 using System.Diagnostics;
 using Minesweeper_GUI;
+using Milestone_CST350.Services;
 
 namespace Milestone_CST350.Controllers
 {
@@ -11,6 +12,8 @@ namespace Milestone_CST350.Controllers
         static Cell[,] buttons;
 		static Board board = new Board();
 		static GridModel gridModel = new GridModel();
+
+        MongoUsrersDAO MongoUsrersDAO = new MongoUsrersDAO();
 
         public HomeController(ILogger<HomeController> logger)
 		{
@@ -88,6 +91,22 @@ namespace Milestone_CST350.Controllers
 
             return PartialView("_Grid", gridModel);
         }
+
+		public IActionResult SaveGameBoard()
+		{
+            string userIdCookie = HttpContext.Request.Cookies["UserId"];
+
+            if (!string.IsNullOrEmpty(userIdCookie) && int.TryParse(userIdCookie, out int userId))
+            {
+                // 'userId' variable now contains the user's ID from the cookie
+            }
+
+            MongoUser user = MongoUsrersDAO.GetUserByIdAsync(userIdCookie);
+			// if there is a grid Id then replace at that index
+			user.Boards.Add(gridModel);
+			MongoUsrersDAO.UpdateUserAsync(userIdCookie, user);
+			return View();
+		}
 
         public IActionResult Privacy()
 		{

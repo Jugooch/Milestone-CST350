@@ -6,7 +6,9 @@ namespace Milestone_CST350.Controllers
 {
 	public class LoginController : Controller
 	{
-		public IActionResult Index()
+        MongoUsrersDAO mongoUsrers = new MongoUsrersDAO();
+
+        public IActionResult Index()
 		{
 			return View();
 		}
@@ -24,8 +26,10 @@ namespace Milestone_CST350.Controllers
         public IActionResult CreateAccount(UserModel user)
         {
             UserService service = new UserService();
+			
             if (service.IsValid(user))
             {
+                mongoUsrers.CreateUserAsync(new MongoUser(user.FirstName, user.LastName, user.Sex, user.Age, user.State, user.Email, user.Username, user.Password));
                 return RedirectToAction("Index", "Home");
             }
             else
@@ -39,11 +43,22 @@ namespace Milestone_CST350.Controllers
 			return View();
 		}
 
-        public IActionResult LoginAuthenticate(UserModel user)
+        public IActionResult LoginAuthenticate(MongoUser user)
         {
 			SecurityService service = new SecurityService();
 			if (service.IsValid(user)){
-				return RedirectToAction("Index", "Home");
+
+                // Find by username and password
+                MongoUser mongoUser = mongoUsrers.GetByNameAndPassword(user);
+
+                var cookieOptions = new CookieOptions
+                {
+                    Expires = DateTime.Now.AddDays(1), // Set the cookie expiration date
+                    HttpOnly = true // Prevent JavaScript access to the cookie
+                };
+                HttpContext.Response.Cookies.Append("UserId", mongoUser.ID.ToString(), cookieOptions);
+
+                return RedirectToAction("Index", "Home");
 			}
 			else
 			{
