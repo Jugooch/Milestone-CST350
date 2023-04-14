@@ -59,6 +59,10 @@ namespace Milestone_CST350.Controllers
 
             MongoUser user = MongoUsrersDAO.GetUserByIdAsync(userIdCookie);
 
+            buttons = user.Boards[id].Grid;
+            gridModel = user.Boards[id];
+            board.Grid = user.Boards[id].Grid;
+
             return View("Minesweeper", user.Boards[id]);
         }
 
