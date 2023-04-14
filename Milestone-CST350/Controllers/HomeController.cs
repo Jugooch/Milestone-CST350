@@ -62,6 +62,21 @@ namespace Milestone_CST350.Controllers
             return View("Minesweeper", user.Boards[id]);
         }
 
+        public IActionResult DeleteLoadedGame(int gameId)
+        {
+            string userIdCookie = HttpContext.Request.Cookies["UserId"];
+
+            if (!string.IsNullOrEmpty(userIdCookie) && int.TryParse(userIdCookie, out int userId))
+            {
+                // 'userId' variable now contains the user's ID from the cookie
+            }
+
+            MongoUser user = MongoUsrersDAO.GetUserByIdAsync(userIdCookie);
+            user.Boards.RemoveAt(gameId);
+            MongoUsrersDAO.UpdateUserAsync(userIdCookie, user);
+            return View("LoadGame", user);
+        }
+
         public IActionResult Minesweeper(GridModel grid)
         {
             string userIdCookie = HttpContext.Request.Cookies["UserId"];
@@ -155,6 +170,9 @@ namespace Milestone_CST350.Controllers
 			MongoUsrersDAO.UpdateUserAsync(userIdCookie, user);
 			return View();
 		}
+
+
+
 
         public IActionResult Privacy()
 		{
