@@ -14,13 +14,7 @@ namespace Milestone_CST350.Controllers
 		static GridModel gridModel = new GridModel();
 		MinesweeperService minesweeperService = new MinesweeperService();
 
-        /*
-         * 
-         * THIS SHOULD UPDATE WHEN A USER IS LOGGED IN AND STAY UNTIL LOGGED OUT/APP QUIT
-         * 
-         */
-        UserModel LoggedInUser = new UserModel();
-        List<int> savedGames = new List<int>();
+        MongoUsrersDAO MongoUsrersDAO = new MongoUsrersDAO();
 
         public HomeController(ILogger<HomeController> logger)
 		{
@@ -36,26 +30,80 @@ namespace Milestone_CST350.Controllers
 			return View(stringList);
 		}
 
+		public IActionResult PlayGame()
+		{
+			return View();
+		}
+
 		public IActionResult SelectDifficulty()
 		{
 			return View();
 		}
 
-		public IActionResult ContinueGame(int gameId) 
-		{ 
-			board = minesweeperService.GetBoard(gameId);
-			buttons = board.Grid;
-			gridModel = new GridModel(board);
-			return View("Minesweeper", gridModel);
-		}
-
-		public IActionResult Minesweeper(GridModel grid)
+        public IActionResult LoadGame()
         {
+            string userIdCookie = HttpContext.Request.Cookies["UserId"];
+
+            if (!string.IsNullOrEmpty(userIdCookie) && int.TryParse(userIdCookie, out int userId))
+            {
+                // 'userId' variable now contains the user's ID from the cookie
+            }
+
+            MongoUser user = MongoUsrersDAO.GetUserByIdAsync(userIdCookie);
+            return View(user);
+        }
+
+        public IActionResult PlayLoadedGame(int id)
+        {
+            string userIdCookie = HttpContext.Request.Cookies["UserId"];
+
+            if (!string.IsNullOrEmpty(userIdCookie) && int.TryParse(userIdCookie, out int userId))
+            {
+                // 'userId' variable now contains the user's ID from the cookie
+            }
+
+            MongoUser user = MongoUsrersDAO.GetUserByIdAsync(userIdCookie);
+
+            buttons = user.Boards[id].Grid;
+            gridModel = user.Boards[id];
+            board.Grid = user.Boards[id].Grid;
+
+            return View("Minesweeper", user.Boards[id]);
+        }
+
+        public IActionResult DeleteLoadedGame(int gameId)
+        {
+            string userIdCookie = HttpContext.Request.Cookies["UserId"];
+
+            if (!string.IsNullOrEmpty(userIdCookie) && int.TryParse(userIdCookie, out int userId))
+            {
+                // 'userId' variable now contains the user's ID from the cookie
+            }
+
+            MongoUser user = MongoUsrersDAO.GetUserByIdAsync(userIdCookie);
+            user.Boards.RemoveAt(gameId);
+            MongoUsrersDAO.UpdateUserAsync(userIdCookie, user);
+            return View("LoadGame", user);
+        }
+
+        public IActionResult Minesweeper(GridModel grid)
+        {
+            string userIdCookie = HttpContext.Request.Cookies["UserId"];
+
+            if (!string.IsNullOrEmpty(userIdCookie) && int.TryParse(userIdCookie, out int userId))
+            {
+                // 'userId' variable now contains the user's ID from the cookie
+            }
+
+            MongoUser user = MongoUsrersDAO.GetUserByIdAsync(userIdCookie);
+
             board = new Board(10, (float)grid.Difficulty);
             buttons = board.Grid;
             board.setupBombs();
             board.CalcLiveNeighbors();
             gridModel = new GridModel(board);
+            gridModel.Id = user.Boards.Count;
+            gridModel.Name = "Board " + user.Boards.Count;
             return View("Minesweeper", gridModel);
         }
 
@@ -110,6 +158,30 @@ namespace Milestone_CST350.Controllers
 
             return PartialView("_Grid", gridModel);
         }
+
+		public IActionResult SaveGameBoard()
+		{
+            string userIdCookie = HttpContext.Request.Cookies["UserId"];
+
+            if (!string.IsNullOrEmpty(userIdCookie) && int.TryParse(userIdCookie, out int userId))
+            {
+                // 'userId' variable now contains the user's ID from the cookie
+            }
+
+            MongoUser user = MongoUsrersDAO.GetUserByIdAsync(userIdCookie);
+            // if there is a grid Id then replace at that index
+
+            gridModel.Id = user.Boards.Count;
+            gridModel.Name = "Board " + user.Boards.Count;
+
+
+            user.Boards.Add(gridModel);
+			MongoUsrersDAO.UpdateUserAsync(userIdCookie, user);
+			return View();
+		}
+
+
+
 
         public IActionResult Privacy()
 		{

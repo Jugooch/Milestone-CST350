@@ -1,4 +1,6 @@
-﻿namespace Milestone_CST350.Models
+﻿using Minesweeper_GUI;
+
+namespace Milestone_CST350.Models
 {
     public class UserModel
     {
@@ -11,5 +13,6 @@
         public string Email { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
+        //public List<Board> Boards { get; set; }
     }
 }

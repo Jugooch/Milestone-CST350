@@ -5,6 +5,9 @@ namespace Milestone_CST350.Models
 {
     public class GridModel
     {
+        public int Id { get; set; }
+
+        public string Name { get; set; }
         // The cell class represents one square onthe board. Grid is a 2d array of cells
         public Cell[,] Grid { get; set; }
 
