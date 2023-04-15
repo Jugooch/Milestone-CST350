@@ -12,6 +12,7 @@ namespace Milestone_CST350.Controllers
         static Cell[,] buttons;
 		static Board board = new Board();
 		static GridModel gridModel = new GridModel();
+		MinesweeperService minesweeperService = new MinesweeperService();
 
         MongoUsrersDAO MongoUsrersDAO = new MongoUsrersDAO();
 
@@ -20,9 +21,13 @@ namespace Milestone_CST350.Controllers
 			_logger = logger;
 		}
 
-		public IActionResult Index()
+		public IActionResult Index(int userID)
 		{
-			return View();
+			savedGames = minesweeperService.GetAllBoards(userID);
+			List<string> stringList = new List<string>();
+			stringList.Add("hello");
+			stringList.Add("world");
+			return View(stringList);
 		}
 
 		public IActionResult PlayGame()
@@ -64,6 +69,21 @@ namespace Milestone_CST350.Controllers
             board.Grid = user.Boards[id].Grid;
 
             return View("Minesweeper", user.Boards[id]);
+        }
+
+        public IActionResult DeleteLoadedGame(int gameId)
+        {
+            string userIdCookie = HttpContext.Request.Cookies["UserId"];
+
+            if (!string.IsNullOrEmpty(userIdCookie) && int.TryParse(userIdCookie, out int userId))
+            {
+                // 'userId' variable now contains the user's ID from the cookie
+            }
+
+            MongoUser user = MongoUsrersDAO.GetUserByIdAsync(userIdCookie);
+            user.Boards.RemoveAt(gameId);
+            MongoUsrersDAO.UpdateUserAsync(userIdCookie, user);
+            return View("LoadGame", user);
         }
 
         public IActionResult Minesweeper(GridModel grid)
@@ -159,6 +179,9 @@ namespace Milestone_CST350.Controllers
 			MongoUsrersDAO.UpdateUserAsync(userIdCookie, user);
 			return View();
 		}
+
+
+
 
         public IActionResult Privacy()
 		{
