@@ -1,30 +1,8 @@
-﻿@model IEnumerable<string>
-
-@{
-    int gameNum = 0;
+﻿@{
+    ViewData["Title"] = "Home Page";
 }
 
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
-
-    <!--I added this little example for the index page that gives the users the ability to continue a game from here-->
-    <div style="width: 60%; margin-top: 32px;" align="center">
-        @if(Model == null)
-        {
-            <h4>No saved games... Click Minesweeper at the top to start!</h4>
-        }
-        else{
-            <h4>Want to continue a saved game?</h4>
-            <hr />
-            @foreach(string gameId in Model){
-                gameNum++;
-                <div style="display: flex; flex-direction: row; margin: 16px; justify-content:center;">
-                    <p>Game Number @gameNum</p>
-                    <form asp-action="ContinueGame">
-                        <button class="btn btn-primary" type="submit" value="@gameId">Continue</button>
-                    </form>
-                </div>
-            }
-        }
-    </div>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>

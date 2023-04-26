@@ -12,7 +12,6 @@ namespace Milestone_CST350.Controllers
         static Cell[,] buttons;
 		static Board board = new Board();
 		static GridModel gridModel = new GridModel();
-		MinesweeperService minesweeperService = new MinesweeperService();
 
         MongoUsrersDAO MongoUsrersDAO = new MongoUsrersDAO();
 
@@ -21,13 +20,9 @@ namespace Milestone_CST350.Controllers
 			_logger = logger;
 		}
 
-		public IActionResult Index(int userID)
+		public IActionResult Index()
 		{
-			savedGames = minesweeperService.GetAllBoards(userID);
-			List<string> stringList = new List<string>();
-			stringList.Add("hello");
-			stringList.Add("world");
-			return View(stringList);
+			return View();
 		}
 
 		public IActionResult PlayGame()

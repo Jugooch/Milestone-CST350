@@ -26,41 +26,41 @@ namespace Milestone_CST350.Controllers
         /// allowing a user to select a saved game
         /// </summary>
         /// <returns></returns>
-        [HttpGet]
+/*        [HttpGet]
         [ResponseType(typeof(List<int>))]
         public List<int> Index()
         {
 
-            /*
+            *//*
              * 
              * THIS SHOULD USE THE LOGGED IN USER"S ID TO FIND THEIR SAVED GAMES
              * 
-             */
+             *//*
             return minesweeperService.GetAllBoards(LoggedInUser.ID);
-        }
+        }*/
 
         /// <summary>
         /// Get API method to get the specific cells for a game. Should be used to continue a specified game by ID
         /// </summary>
         /// <param name="gameId"></param>
         /// <returns></returns>
-        [HttpGet("/{gameId}")]
+/*        [HttpGet("/{gameId}")]
         [ResponseType(typeof(Board))]
         public Board GetBoard(int gameId)
         {
             return minesweeperService.GetBoard(gameId);
-        }
+        }*/
         
         /// <summary>
         /// Delete API method that should delete the game with the ID passed in as a param
         /// </summary>
         /// <param name="gameId"></param>
         /// <returns></returns>
-        [HttpDelete("/{gameId}")]
+/*        [HttpDelete("/{gameId}")]
         [ResponseType(typeof(int))]
         public int DeleteBoard(int gameId)
         {
             return minesweeperService.DeleteBoard(gameId);
-        }
+        }*/
     }
 }
