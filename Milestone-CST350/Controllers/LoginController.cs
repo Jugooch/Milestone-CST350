@@ -1,12 +1,20 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Activity2_2.Services.Utilities;
+using Microsoft.AspNetCore.Mvc;
 using Milestone_CST350.Models;
 using Milestone_CST350.Services;
+using ILogger = Activity2_2.Services.Utilities.ILogger;
 
 namespace Milestone_CST350.Controllers
 {
 	public class LoginController : Controller
 	{
         MongoUsrersDAO mongoUsrers = new MongoUsrersDAO();
+        ILogger _logger;
+
+        public LoginController(ILogger logger)
+        {
+            _logger = logger;
+        }
 
         public IActionResult Index()
 		{
@@ -45,8 +53,15 @@ namespace Milestone_CST350.Controllers
 
         public IActionResult LoginAuthenticate(MongoUser user)
         {
-			SecurityService service = new SecurityService();
-			if (service.IsValid(user)){
+            _logger.GetInstance().Info("Entering Process Login:");
+            _logger.GetInstance().Info("Parameter: " + user.Username.ToString());
+
+            SecurityService service = new SecurityService();
+			if (service.IsValid(user))
+            {
+                _logger.GetInstance().Info("Login Success");
+                _logger.GetInstance().Info("Username:" + user.Username + ", Password: " + user.Password);
+                _logger.GetInstance().Info("Exiting Process Login");
 
                 // Find by username and password
                 MongoUser mongoUser = mongoUsrers.GetByNameAndPassword(user);
@@ -61,8 +76,12 @@ namespace Milestone_CST350.Controllers
                 return RedirectToAction("Index", "Home");
 			}
 			else
-			{
-				return RedirectToAction("LoginFailed", "Login");
+            {
+                _logger.GetInstance().Info("Login failure");
+                _logger.GetInstance().Info("Username:" + user.Username + ", Password: " + user.Password);
+                _logger.GetInstance().Info("Exiting Process Login");
+
+                return RedirectToAction("LoginFailed", "Login");
 			}
         }
     }
